@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
-set -e
+set -e # Arrête le script en cas d'erreur
 
-APP_DIR="../app/mediatekformation"
-MYSQL_INIT_DIR="../docker/mysql/init"
+# Chemin absolu du dossier où se trouve le script
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Racine du projet = dossier parent du dossier scripts/
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+APP_DIR="$PROJECT_ROOT/app/mediatekformation"
+MYSQL_INIT_DIR="$PROJECT_ROOT/docker/mysql/init"
 REPO_URL="https://github.com/patrickbrouhard/mediatekformation.git"
 
 # Clonage du dépôt GitHub si absent

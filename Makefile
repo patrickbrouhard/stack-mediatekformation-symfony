@@ -26,11 +26,12 @@ test:
 	docker compose exec -T php php bin/phpunit
 
 import-app: # Importe une application Symfony depuis un dépôt Git et copie son script sql
+	chmod +x ./scripts/import-app.sh
 	./scripts/import-app.sh
 
 init: # Installation complète sans reset DB
-	make build
 	make import-app
+	make build
 	make composer
 	make migrate
 
