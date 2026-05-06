@@ -19,7 +19,7 @@ services:
       - ./app/mediatekformation:/var/www/mediatekformation
     working_dir: /var/www/mediatekformation
     environment:
-      APP_ENV: dev
+      APP_ENV: ${APP_ENV:-dev}
       APP_SECRET: ${PHP_APP_SECRET}
       DATABASE_URL: ${PHP_DATABASE_URL}
 

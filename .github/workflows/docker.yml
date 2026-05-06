@@ -1,0 +1,13 @@
+name: Docker Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build PHP image # Vérifie que l'image PHP peut être construite sans erreur
+        run: docker build ./docker/php -t mediatek_php:ci
+      - name: Validate compose # Vérifie que le fichier docker-compose.yml est valide
+        run: docker compose config --quiet

@@ -89,6 +89,10 @@ yarn-error.log*
 # Divers
 # =========================
 
+.env
 *.env
 *.bak
 *.swp
+
+app/**/* # Ignore tous les fichiers dans le dossier app...
+!app/README.md # ...sauf le README.md
