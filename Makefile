@@ -7,7 +7,7 @@ down:
 reset-db: # Supprime conteneurs, volumes, réseaux et images
 	docker compose down -v
 
-build: " # Construit les images Docker et démarre les conteneurs
+build: # Construit les images Docker et démarre les conteneurs
 	docker compose up -d --build
 
 logs:
