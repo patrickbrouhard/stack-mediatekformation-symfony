@@ -1,28 +1,3 @@
-# Projet Symfony Dockerisé
-
-## Lancer le projet
-
-```bash
-make up
-```
-
-## Tests
-
-```bash
-make test
-```
-
-## Stack
-- Nginx
-- PHP-FPM
-- MySQL
-- phpMyAdmin
-
-## Infra
-
-Terraform + Ansible (en cours)
-
-
 # stack-mediatekformation-symfony
 
 Stack Docker pour exécuter l’application Symfony **[mediatekformation](https://github.com/patrickbrouhard/mediatekformation)** + un stack d’observabilité (Prometheus / Loki / Grafana).
