@@ -20,6 +20,9 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: admin
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./docker/monitoring/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./docker/monitoring/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./docker/monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
     ports:
       - "3000:3000"
     networks:
