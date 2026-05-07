@@ -9,10 +9,32 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-  - job_name: docker-containers
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: docker
-          __path__: /var/lib/docker/containers/*/*-json.log
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+
+    relabel_configs:
+      # Nom du container Docker (ex: /mediatek_nginx) -> mediatek_nginx
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container'
+
+      # Image
+      - source_labels: ['__meta_docker_container_image']
+        target_label: 'image'
+
+      # Docker Compose service (si présent)
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: 'compose_service'
+
+      # Docker Compose project (si présent)
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
+        target_label: 'compose_project'
+
+      # On indique à promtail quel fichier lire (log json Docker)
+      - source_labels: ['__meta_docker_container_log_path']
+        target_label: '__path__'
+
+    pipeline_stages:
+      - docker: {}

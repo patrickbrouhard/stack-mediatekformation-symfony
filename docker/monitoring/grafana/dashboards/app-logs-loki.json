@@ -1,0 +1,189 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "loki",
+      "name": "Loki",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "logs",
+      "name": "Logs",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "panels": [],
+      "title": "App logs (Loki)",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 1 },
+      "id": 2,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "{compose_service=\"nginx\"} |~ \"$search\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Nginx logs",
+      "type": "logs"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 10 },
+      "id": 3,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "{compose_service=\"php\"} |~ \"$search\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "PHP logs",
+      "type": "logs"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 19 },
+      "id": 4,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "{compose_service=~\"$compose_service\", container=~\"$container\"} |~ \"$search\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Logs (service sélectionné)",
+      "type": "logs"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["loki", "logs", "symfony", "docker"],
+  "templating": {
+    "list": [
+      {
+        "current": { "selected": false, "text": "nginx", "value": "nginx" },
+        "datasource": { "type": "loki", "uid": "loki" },
+        "definition": "label_values(compose_service)",
+        "hide": 0,
+        "includeAll": true,
+        "allValue": ".*",
+        "label": "Compose service",
+        "multi": false,
+        "name": "compose_service",
+        "options": [],
+        "query": "label_values(compose_service)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": { "selected": false, "text": "All", "value": ".*" },
+        "datasource": { "type": "loki", "uid": "loki" },
+        "definition": "label_values({compose_service=~\"$compose_service\"}, container)",
+        "hide": 0,
+        "includeAll": true,
+        "allValue": ".*",
+        "label": "Container",
+        "multi": false,
+        "name": "container",
+        "options": [],
+        "query": "label_values({compose_service=~\"$compose_service\"}, container)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": { "selected": false, "text": ".*", "value": ".*" },
+        "hide": 0,
+        "label": "Search (regex)",
+        "name": "search",
+        "options": [
+          { "selected": true, "text": ".*", "value": ".*" }
+        ],
+        "query": ".*",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": { "from": "now-15m", "to": "now" },
+  "timepicker": {},
+  "timezone": "",
+  "title": "App logs",
+  "uid": "mediatek-app-logs",
+  "version": 1
+}
