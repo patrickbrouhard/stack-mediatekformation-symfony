@@ -1,0 +1,12 @@
+apiVersion: 1            # Version du format de provisioning Grafana
+
+providers:
+  - name: "default"      # Nom du provider (libre, sert d’identifiant)
+    orgId: 1             # ID de l’organisation Grafana (1 = organisation par défaut)
+    folder: ""           # Dossier Grafana où seront placés les dashboards ("" = racine)
+    type: file           # Type de provisioning : chargement depuis des fichiers
+    disableDeletion: false  # Permet de supprimer les dashboards depuis l’UI
+    editable: true          # Autorise l’édition des dashboards dans Grafana
+    updateIntervalSeconds: 10  # Rafraîchit les dashboards toutes les 10 secondes
+    options:
+      path: /var/lib/grafana/dashboards  # Chemin où Grafana va lire les fichiers JSON
