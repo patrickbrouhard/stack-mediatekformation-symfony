@@ -1,6 +1,9 @@
 up:
 	docker compose up -d
 
+upmonitoring:
+	docker compose -f docker-compose.monitoring.yml up -d
+
 down:
 	docker compose down
 
@@ -32,6 +35,7 @@ import-app: # Importe une application Symfony depuis un dépôt Git et copie son
 init: # Installation complète sans reset DB
 	make import-app
 	make build
+	make upmonitoring
 	make composer
 	make migrate
 
